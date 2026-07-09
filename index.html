@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric API - Документация</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="fabricmc.png" type="image/x-icon">
+</head>
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="sidebar__header">
+                <span class="sidebar__tag">Fabric Documentation</span>
+                <h2>Уроки</h2>
+            </div>
+
+            <nav class="sidebar__nav">
+                <a class="sidebar__link sidebar__link--active" href="1.html">Все о Fabric API</a>
+                
+            </nav>
+
+            
+        </aside>
+
+        <main class="content">
+            <div class="hero">
+                <h1 class="hero__title">Fabric API Документация</h1>
+                <p class="hero__description">Данная документация неофициальная</p>
+
+                <div class="search-panel">
+                    <label class="search-label" for="searchInput">
+                        <span>Поиск по терминам</span>
+                        <input id="searchInput" class="search-input" type="search" placeholder="Например: Удар" autocomplete="off">
+                    </label>
+                    <div class="search-info">Введите слово, например «Удар», чтобы найти совпадения.</div>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const topics = [
+            { title: 'MinecraftClient', description: 'Получение объекта клиента Minecraft через Fabric.', url: '1.html#minecraftclient' },
+            { title: 'PlayerEntity', description: 'Объект игрока и доступ к его характеристикам.', url: '1.html#playerentity' },
+            { title: 'World', description: 'Получение мира и работа с блоками и сущностями.', url: '1.html#world' },
+            { title: 'PlayerInventory', description: 'Получение инвентаря игрока через PlayerInventory.', url: '1.html#playerinventory' },
+            { title: 'ItemStack', description: 'Получение предмета в руке и работу с ним.', url: '1.html#itemstack' },
+            { title: 'BlockState', description: 'Получение состояния блока по координатам.', url: '1.html#blockstate' },
+            { title: 'getHealth', description: 'Получение текущего здоровья игрока.', url: '1.html#gethealth' },
+            { title: 'Координаты', description: 'Получение координат игрока по осям X, Y и Z.', url: '1.html#getxyz' },
+            { title: 'getYaw', description: 'Получение угла поворота игрока по горизонтали.', url: '1.html#getyaw' },
+            { title: 'getPitch', description: 'Получение угла наклона игрока по вертикали.', url: '1.html#getpitch' },
+            { title: 'getEntities', description: 'Получение всех сущностей из мира.', url: '1.html#getentities' },
+            { title: 'getPlayers', description: 'Получение списка игроков из мира.', url: '1.html#getplayers' },
+            { title: 'isPressed', description: 'Проверка, нажата ли клавиша, например пробел, shift или sprint.', url: '1.html#ispressed' },
+            { title: 'Vec3d', description: 'Создание вектора и вычисление направления между точками.', url: '1.html#vec3d' },
+            { title: 'Удар', description: 'Удар и атака сущности в радиусе 5 блоков.', url: '1.html#udar' },
+            { title: 'attackEntity', description: 'Атака сущности в радиусе и анимация удара рукой.', url: '1.html#attackentity' },
+            { title: 'FPS', description: 'Получение текущего FPS в клиенте Minecraft.', url: '1.html#fps' },
+            { title: 'Game Version', description: 'Получение версии игры через mc.getGameVersion().', url: '1.html#version' }
+        ];
+
+        const input = document.getElementById('searchInput');
+        const results = document.getElementById('searchResults');
+
+        function highlight(text, query) {
+            if (!query) return text;
+            const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return text.replace(new RegExp(`(${escaped})`, 'ig'), '<span class="search-highlight">$1</span>');
+        }
+
+        function renderResults(list, query) {
+            if (!query.trim()) {
+                results.innerHTML = '<div class="search-empty">Введите запрос для поиска.</div>';
+                return;
+            }
+
+            const filtered = list.filter(item => item.title.toLowerCase().includes(query.toLowerCase()) || item.description.toLowerCase().includes(query.toLowerCase()));
+
+            if (!filtered.length) {
+                results.innerHTML = '<div class="search-empty">Ничего не найдено. Попробуйте другое слово.</div>';
+                return;
+            }
+
+            results.innerHTML = filtered.map(item => `
+                <a href="${item.url}" class="search-item-link">
+                    <article class="search-item">
+                        <strong>${highlight(item.title, query)}</strong>
+                        <p>${highlight(item.description, query)}</p>
+                    </article>
+                </a>
+            `).join('');
+        }
+
+        input.addEventListener('input', () => renderResults(topics, input.value));
+
+        renderResults(topics, '');
+    </script>
+</body>
+</html>

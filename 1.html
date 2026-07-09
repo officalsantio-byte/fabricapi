@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric API - Все о Fabric API</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/fabricmc.png" type="image/x-icon">
+</head>
+<body>
+    <div class="page page--single lesson-page">
+        <a class="lesson-back-button" href="index.html">← Главное меню</a>
+        <h1 class="lesson-title">Все о Fabric API</h1>
+
+        <section class="lesson-section" id="minecraftclient">
+            <h2>MinecraftClient</h2>
+            <p>Чтобы получить объект клиента Minecraft используйте:</p>
+            <div class="code-box">MinecraftClient mc = MinecraftClient.getInstance();</div>
+        </section>
+
+        <section class="lesson-section" id="playerentity">
+            <h2>PlayerEntity</h2>
+            <p>Чтобы получить игрока из клиента, используйте `mc.player`.</p>
+            <div class="code-box">PlayerEntity player = mc.player;</div>
+        </section>
+
+        <section class="lesson-section" id="world">
+            <h2>World</h2>
+            <p>Чтобы получить мир, используйте `mc.world` и затем работайте с сущностями или блоками.</p>
+            <div class="code-box">World world = mc.world;</div>
+        </section>
+
+        <section class="lesson-section" id="playerinventory">
+            <h2>PlayerInventory</h2>
+            <p>Игрок хранит предметы в своем инвентаре. Получить его можно так:</p>
+            <div class="code-box">PlayerInventory inventory = mc.player.getInventory();</div>
+        </section>
+
+        <section class="lesson-section" id="itemstack">
+            <h2>ItemStack</h2>
+            <p>Чтобы получить предмет, который держит игрок, используйте:</p>
+            <div class="code-box">ItemStack item = mc.player.getMainHandStack();</div>
+        </section>
+
+        <section class="lesson-section" id="blockstate">
+            <h2>BlockState</h2>
+            <p>Получение состояния блока по координатам выглядит так:</p>
+            <div class="code-box">BlockState block = world.getBlockState(new BlockPos(x, y, z));</div>
+        </section>
+
+        <section class="lesson-section" id="gethealth">
+            <h2>getHealth</h2>
+            <p>Получение текущего здоровья игрока:</p>
+            <div class="code-box">float health = mc.player.getHealth();</div>
+        </section>
+
+        <section class="lesson-section" id="getxyz">
+            <h2>Координаты</h2>
+            <p>Получение координат игрока по осям X, Y и Z:</p>
+            <div class="code-box">double x = mc.player.getX();
+double y = mc.player.getY();
+double z = mc.player.getZ();</div>
+        </section>
+
+        <section class="lesson-section" id="getyaw">
+            <h2>getYaw</h2>
+            <p>Получение горизонтального поворота игрока:</p>
+            <div class="code-box">float yaw = mc.player.getYaw();</div>
+        </section>
+
+        <section class="lesson-section" id="getpitch">
+            <h2>getPitch</h2>
+            <p>Получение вертикального наклона игрока:</p>
+            <div class="code-box">float pitch = mc.player.getPitch();</div>
+        </section>
+
+        <section class="lesson-section" id="getentities">
+            <h2>getEntities</h2>
+            <p>Получение всех сущностей из мира:</p>
+            <div class="code-box">List&lt;Entity&gt; entities = world.getEntities();</div>
+        </section>
+
+        <section class="lesson-section" id="getplayers">
+            <h2>getPlayers</h2>
+            <p>Получение всех игроков из мира:</p>
+            <div class="code-box">List&lt;PlayerEntity&gt; players = world.getPlayers();</div>
+        </section>
+
+        <section class="lesson-section" id="ispressed">
+            <h2>isPressed</h2>
+            <p>Проверка, нажата ли клавиша. Например, пробел, shift или sprint:</p>
+            <div class="code-box">boolean jump = mc.options.jumpKey.isPressed();</div>
+            <div class="code-box">boolean sneak = mc.options.sneakKey.isPressed();</div>
+            <div class="code-box">boolean sprint = mc.options.sprintKey.isPressed();</div>
+        </section>
+
+        <section class="lesson-section" id="vec3d">
+            <h2>Vec3d</h2>
+            <p>Создание вектора и вычисление направления между точками:</p>
+            <div class="code-box">Vec3d target = new Vec3d(x, y, z);
+Vec3d player = mc.player.getPos();
+
+Vec3d dir = target.subtract(player).normalize();
+
+float yaw = (float) Math.toDegrees(Math.atan2(dir.z, dir.x)) - 90;
+float pitch = (float) Math.toDegrees(Math.asin(dir.y));</div>
+        </section>
+
+        <section class="lesson-section" id="udar">
+            <h2>Удар</h2>
+            <p>Пример удара по сущности в радиусе 5 блоков:</p>
+            <div class="code-box">for (PlayerEntity target : mc.world.getPlayers()) {
+    if (target.distanceTo(mc.player) <= 5) {
+        mc.interactionManager.attackEntity(mc.player, target);
+        mc.player.swingHand(Hand.MAIN_HAND);
+    }
+}</div>
+        </section>
+
+        <section class="lesson-section" id="attackentity">
+            <h2>attackEntity</h2>
+            <p>Атака сущности через менеджер взаимодействий Minecraft:</p>
+            <div class="code-box">mc.interactionManager.attackEntity(mc.player, target);</div>
+        </section>
+
+        <section class="lesson-section" id="fps">
+            <h2>FPS</h2>
+            <p>Получение текущего FPS в клиенте:</p>
+            <div class="code-box">int fps = mc.getCurrentFps();</div>
+        </section>
+
+        <section class="lesson-section" id="version">
+            <h2>Game Version</h2>
+            <p>Получение версии игры:</p>
+            <div class="code-box">String version = mc.getGameVersion();</div>
+        </section>
+    </div>
+</body>
+</html>
